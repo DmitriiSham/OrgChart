@@ -1,13 +1,16 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta charset="UTF-8" />
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>OrgChart</title>
     </head>
     <body>
-        <script src="./libs/d3.v7.min.js"></script>
-        <script src="./libs/d3-org-chart.js"></script>
-        <script src="./libs/d3-flextree.js"></script>
-        <script src="./libs/jspdf.umd.min.js"></script>
+        <script src="./libs/d3.v7.min.js" defer></script>
+        <script src="./libs/d3-org-chart.js" defer></script>
+        <script src="./libs/d3-flextree.js" defer></script>
+        <script src="./libs/jspdf.umd.min.js" defer></script>
+        <script src="./properties.js" defer></script>
         <script src="chart.js"></script>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -16,135 +19,200 @@
             rel="stylesheet"
         />
         <link href="style.css" rel="stylesheet" type="text/css" />
-        <link href="./libs/pico.min.css" rel="stylesheet" type="text/css" />
+        <!-- <link href="./libs/pico.min.css" rel="stylesheet" type="text/css" />-->
         <link
             href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
             rel="stylesheet"
         />
 
-        <div class="chart-container" style="height: 100vh">
+        <div class="container">
+            <input
+                type="text"
+                placeholder="Поиск по имени"
+                oninput="filterChart(event)"
+                id="searchInput_test"
+            />
+            <div id="search"></div>
+        </div>
+        <div class="chart-container" >
             <section id="title">
-                <input
-                    type="search"
-                    placeholder="поиск по имени"
-                    oninput="filterChart(event)"
-                    id="searchInput"
-                />
-                <h4 id="current-date"></h4>
+                <h2 id="current-date"></h4>
             </section>
         </div>
 
         <div class="action-buttons">
-            <button
-                onclick="chart.expandAll()"
-                class="btn btn-action-button waves-effect waves-light"
-            >
-                <i class="fas fa-angle-double-down"></i> Раскрыть все</button
-            ><br />
+            <div id="Block_1" class="Blocks">
+                <button
+                    onclick="expandToLowestLevel()"
+                    class="neumorphic"
+                    data-tooltip="Раскрыть один уровень"
+                    data-placement="left"
+                >
+                    <i class="fas fa-chevron-down"></i><span class="tooltiptext">Раскрыть один уровень</span></button
+                ><br />
 
-            <button
-                onclick="chart.collapseAll()"
-                class="btn btn-action-button waves-effect waves-light"
-            >
-                <i class="fas fa-angle-double-up"></i> Свернуть все</button
-            ><br />
-            <button
-                onclick="chart.fit()"
-                class="btn btn-action-button waves-effect waves-light"
-            >
-                <i class="fas fa-sync"></i> Уместить
-            </button>
-            <br />
+                <button
+                    onclick="collapseLowestLevel()"
+                    class="neumorphic"
+                    data-tooltip="Свернуть один уровень"
+                    data-placement="left"
+                >
+                    <i class="fas fa-chevron-up"></i><span class="tooltiptext">Свернуть один уровень</span></button
+                ><br />
+                <button
+                    onclick="expandAllCustom()"
+                    class="neumorphic"
+                    data-tooltip="Раскрыть все"
+                    data-placement="left"
+                >
+                    <i class="fas fa-angle-double-down"></i><span class="tooltiptext">Раскрыть все</span></button
+                ><br />
 
-            <button
-                onclick='chart.layout(["right","bottom","left","top"][index++%4]).render().fit()'
-                class="btn btn-action-button waves-effect waves-light"
-            >
-                <i class="fas fa-retweet"></i> Перевернуть
-            </button>
-            <br />
+                <button
+                    onclick="collapseAllCustom()"
+                    class="neumorphic"
+                    data-tooltip="Свернуть все"
+                    data-placement="left"
+                >
+                    <i class="fas fa-angle-double-up"></i><span class="tooltiptext">Свернуть все</span></button
+                ><br />
+            </div>
 
-            <button
-                onclick="chart.compact(!!(compact++%2)).render().fit()"
-                class="btn btn-action-button waves-effect waves-light"
-            >
-                <i class="fas fa-sitemap"></i> Компактный вид
-            </button>
-            <br />
-            <button
-                onclick="centerNode()"
-                class="btn btn-action-button waves-effect waves-light"
-            >
-                <i class="fas fa-compress-arrows-alt"></i> Отцентрировать
-            </button>
-            <br />
+            <div id="Block_2" class="Blocks">
+                <button
+                    onclick="chart.fit()"
+                    class="neumorphic"
+                    data-tooltip="Уместить"
+                    data-placement="left"
+                >
+                    <i class="fas fa-compress"></i><span class="tooltiptext">Уместить</span>
+                </button>
+                <br />
 
-            <button
-                onclick="highlightMultipleBranches()"
-                class="btn btn-action-button waves-effect waves-light"
-            >
-                <i class="fas fa-route"></i> Ветка метки
-            </button>
-            <br />
-            <button
-                onclick="clearHighlighting()"
-                class="btn btn-action-button waves-effect waves-light"
-            >
-                <i class="fas fa-eraser"></i> Снять выделение
-            </button>
-            <br />
-            <button
-                onclick="chart.fullscreen('body')"
-                class="btn btn-action-button waves-effect waves-light"
-            >
-                <i class="fas fa-expand"></i> Полноэкранный режим</button
-            ><br />
+                <button
+                    onclick='chart.layout(["left","top"][index++%2]).render().fit()'
+                    class="neumorphic"
+                    data-tooltip="Перевернуть"
+                    data-placement="left"
+                >
+                    <i class="fas fa-retweet"></i><span class="tooltiptext">Перевернуть</span>
+                </button>
+                <br />
 
-            <button
-                onclick="chart.exportImg()"
-                class="btn btn-action-button waves-effect waves-light"
-            >
-                <i class="far fa-images"></i> экспорт img
-            </button>
-            <br />
+                <button
+                    onclick="chart.compact(!!(compact++%2)).render().fit()"
+                    class="neumorphic"
+                    data-tooltip="Компактный вид"
+                    data-placement="left"
+                >
+                    <i class="fas fa-sitemap"></i><span class="tooltiptext">Компактный вид</span>
+                </button>
+                <br />
+                <button
+                    onclick="centerNode()"
+                    class="neumorphic"
+                    data-tooltip="Отцентрировать"
+                    data-placement="left"
+                >
+                    <i class="fas fa-compress-arrows-alt"></i><span class="tooltiptext">Отцентрировать</span>
+                </button>
+                <br />
+            </div>
 
-            <button
-                onclick="chart.exportImg({full:true})"
-                class="btn btn-action-button waves-effect waves-light"
-            >
-                <i class="far fa-images"></i> экспорт full img
-            </button>
-            <br />
+            <div id="Block_3" class="Blocks">
+                <button
+                    onclick="highlightMultipleBranches()"
+                    class="neumorphic"
+                    data-tooltip="Ветка метки"
+                    data-placement="left"
+                    style="height: 90%"
+                >
+                    <i class="fas fa-route"></i><span class="tooltiptext">Ветка метки</span>
+                </button>
+                <br />
+                <button
+                    onclick="clearHighlighting()"
+                    class="neumorphic"
+                    data-tooltip="Снять выделение"
+                    data-placement="left"
+                    style="height: 90%"
+                >
+                    <i class="fas fa-eraser"></i><span class="tooltiptext">Снять выделение</span>
+                </button>
+                <br />
+            </div>
 
-            <button
-                onclick="chart.exportSvg()"
-                class="btn btn-action-button waves-effect waves-light"
-            >
-                <i class="fas fa-file-download"></i> экспорт svg
-            </button>
-            <br />
+            <div id="Block_4" class="Blocks">
+                <button
+                    onclick="chart.exportImg({scale: 5})"
+                    class="neumorphic"
+                    data-tooltip="Экспорт img"
+                    data-placement="left"
+                >
+                    <i class="far fa-images"></i><span class="tooltiptext">Экспорт img</span>
+                </button>
+                <br />
 
-            <button
-                onclick="downloadPdf()"
-                class="btn btn-action-button waves-effect waves-light"
-            >
-                <i class="far fa-file-pdf"></i> экспорт pdf
-            </button>
-            <br />
+                <button
+                    onclick="chart.exportImg({full:true, scale: 7})"
+                    class="neumorphic"
+                    data-tooltip="Экспорт full img"
+                    data-placement="left"
+                >
+                    <i class="far fa-images"></i><span class="tooltiptext">Экспорт full img</span>
+                </button>
+                <br />
 
-            <button
-                onclick="chart.zoomOut()"
-                class="btn btn-action-button waves-effect waves-light"
-            >
-                <i class="fas fa-minus"></i> Уменьшить масштаб</button
-            ><br />
-            <button
-                onclick="chart.zoomIn()"
-                class="btn btn-action-button waves-effect waves-light"
-            >
-                <i class="fas fa-plus"></i> Увеличить масштаб
-            </button>
-            <br />
+                <button
+                    onclick="chart.exportSvg()"
+                    class="neumorphic"
+                    data-tooltip="Экспорт svg"
+                    data-placement="left"
+                >
+                    <i class="fas fa-file-download"></i><span class="tooltiptext">Экспорт svg</span>
+                </button>
+                <br />
+
+                <button
+                    onclick="downloadPdf()"
+                    class="neumorphic"
+                    data-tooltip="Экспорт pdf"
+                    data-placement="left"
+                >
+                    <i class="far fa-file-pdf"></i><span class="tooltiptext">Экспорт pdf</span>
+                </button>
+                <br />
+            </div>
+
+            <div id="Block_5" class="Blocks">
+                <button
+                    id="FullScreen"
+                    onclick="fullscreen('body')"
+                    class="neumorphic"
+                    data-tooltip="Полноэкранный режим"
+                    data-placement="left"
+                >
+                    <i class="fas fa-expand"></i><span class="tooltiptext">Полноэкранный режим</span></button
+                ><br />
+
+                <button
+                    onclick="chart.zoomOut()"
+                    class="neumorphic"
+                    data-tooltip="Уменьшить масштаб"
+                    data-placement="left"
+                >
+                    <i class="fas fa-minus"></i><span class="tooltiptext">Уменьшить масштаб</span></button
+                ><br />
+                <button
+                    onclick="chart.zoomIn()"
+                    class="neumorphic"
+                    data-tooltip="Увеличить масштаб"
+                    data-placement="left"
+                >
+                    <i class="fas fa-plus"></i><span class="tooltiptext">Увеличить масштаб</span>
+                </button>
+                <br />
+            </div>
         </div>
     </body>
 </html>
