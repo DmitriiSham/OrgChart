@@ -1,4 +1,51 @@
-/**
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+    <meta charset="utf-8">
+    <title>chart.js - Documentation</title>
+    
+    
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc.css">
+    <script src="scripts/nav.js" defer></script>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav >
+    
+    
+    <h2><a href="index.html">Home</a></h2><h3>Namespaces</h3><ul><li><a href="PROPERTIES.html">PROPERTIES</a></li></ul><h3>Global</h3><ul><li><a href="global.html#actNdCent">actNdCent</a></li><li><a href="global.html#centerNode">centerNode</a></li><li><a href="global.html#chart">chart</a></li><li><a href="global.html#clearHighlighting">clearHighlighting</a></li><li><a href="global.html#collapseAllCustom">collapseAllCustom</a></li><li><a href="global.html#collapseLowestLevel">collapseLowestLevel</a></li><li><a href="global.html#compact">compact</a></li><li><a href="global.html#depthLevel">depthLevel</a></li><li><a href="global.html#downloadPdf">downloadPdf</a></li><li><a href="global.html#expandAllCustom">expandAllCustom</a></li><li><a href="global.html#expandToLowestLevel">expandToLowestLevel</a></li><li><a href="global.html#filterChart">filterChart</a></li><li><a href="global.html#fullscreen">fullscreen</a></li><li><a href="global.html#getAllNodes">getAllNodes</a></li><li><a href="global.html#getOrgData">getOrgData</a></li><li><a href="global.html#highlightMultipleBranches">highlightMultipleBranches</a></li><li><a href="global.html#index">index</a></li><li><a href="global.html#mainNodeId">mainNodeId</a></li><li><a href="global.html#nodeIds">nodeIds</a></li><li><a href="global.html#removeHighlighted">removeHighlighted</a></li><li><a href="global.html#setDescriptionDiv">setDescriptionDiv</a></li><li><a href="global.html#setSvgHeight">setSvgHeight</a></li><li><a href="global.html#setSvgWidth">setSvgWidth</a></li><li><a href="global.html#toggleSearch">toggleSearch</a></li></ul>
+    
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">chart.js</h1>
+    
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
  * Коэффициент для высоты SVG
  * @constant {number} setSvgHeight
  */
@@ -49,7 +96,7 @@ var depthLevel = 1;
 /**
  * Функция для получения данных организационной структуры
  * @async
- * @returns {Promise<Object>} Промис с данными в формате JSON
+ * @returns {Promise&lt;Object>} Промис с данными в формате JSON
  */
 async function getOrgData() {
     const data = await fetch(
@@ -63,7 +110,7 @@ async function getOrgData() {
             return Promise.reject(new Error(result.statusText));
         })
         .then((json) => {
-            if (json && json.length > 0) {
+            if (json &amp;&amp; json.length > 0) {
                 return json;
             } else {
                 console.log(json.length);
@@ -98,11 +145,11 @@ getOrgData().then((dataFlattened) => {
         .siblingsMargin((d) => 100) // Отступ между братьями и сестрами
         .buttonContent(({ node, state }) => {
             // Кнопка для раскрытия/сворачивания узлов
-            return `<div style="px;color:#716E7B;border-radius:5px;padding:4px;font-size:10px;margin:auto auto;background-color:white;border: 1px solid #E4E2E9"> <span style="font-size:9px">${
+            return `&lt;div style="px;color:#716E7B;border-radius:5px;padding:4px;font-size:10px;margin:auto auto;background-color:white;border: 1px solid #E4E2E9"> &lt;span style="font-size:9px">${
                 node.children
-                    ? `<i class="fas fa-angle-up"></i>`
-                    : `<i class="fas fa-angle-down"></i>`
-            }</span> ${node.data._directSubordinates}  </div>`;
+                    ? `&lt;i class="fas fa-angle-up">&lt;/i>`
+                    : `&lt;i class="fas fa-angle-down">&lt;/i>`
+            }&lt;/span> ${node.data._directSubordinates}  &lt;/div>`;
         })
         .linkUpdate(function (d, i, arr) {
             // Настройка линий соединения узлов
@@ -133,7 +180,7 @@ getOrgData().then((dataFlattened) => {
         .nodeContent(function (d, i, arr, state) {
             // Контент узла
             return `
-                    <div style="
+                    &lt;div style="
                         font-family: 'Inter', sans-serif;
                         background-color:#FFFFFF;
                         display: flex;
@@ -145,19 +192,19 @@ getOrgData().then((dataFlattened) => {
                         justify-content: space-around;
                         align-items: center;
                     "> 
-                        <div style="                    
+                        &lt;div style="                    
                         text-align: center;
                         padding-left: 1em;
                         padding-right: 1em;
                         font-weight: bold;
-                        ">${d.data.name}</div>
-                        <div style="
+                        ">${d.data.name}&lt;/div>
+                        &lt;div style="
                         color: #716E7B;                        
                         align-self: start;
                         padding-left: 1em;
-                        "> ${setDescriptionDiv(d)}</div>
-                        </div>
-                    </div>
+                        "> ${setDescriptionDiv(d)}&lt;/div>
+                        &lt;/div>
+                    &lt;/div>
                     `;
         })
         .onNodeClick((d) => {
@@ -237,7 +284,7 @@ function filterChart(e) {
     data.forEach((d) => (d._expanded = false));
     // Loop over data and check if input value matches any name
     data.forEach((d) => {
-        if (value != "" && d.name.toLowerCase().includes(value.toLowerCase())) {
+        if (value != "" &amp;&amp; d.name.toLowerCase().includes(value.toLowerCase())) {
             d._highlighted = true;
             d._expanded = true;
             nodeIds.push(d.id);
@@ -274,7 +321,7 @@ function expandToLowestLevel() {
     if (allNodes.length > 0) {
         depthLevel = depthLevel >= maxDepth ? maxDepth : (depthLevel += 1);
         allNodes.forEach((d) => {
-            if (d.depth <= depthLevel) {
+            if (d.depth &lt;= depthLevel) {
                 d.data._expanded = true;
             }
         });
@@ -293,7 +340,7 @@ function collapseLowestLevel() {
                 d.data._expanded = false;
             }
         });
-        depthLevel = depthLevel < 1 ? depthLevel : (depthLevel -= 1);
+        depthLevel = depthLevel &lt; 1 ? depthLevel : (depthLevel -= 1);
     }
     if (depthLevel === 0) {
         chart.collapseAll();
@@ -439,3 +486,28 @@ function toggleSearch(event) {
     if (input.value) input.value = "";
     else input.blur();
 }
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+    
+    
+</div>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 4.0.4</a> using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/polyfill.js"></script>
+<script src="scripts/linenumber.js"></script>
+
+
+
+</body>
+</html>

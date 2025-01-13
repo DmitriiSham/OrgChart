@@ -1,0 +1,22 @@
+{
+    "name": "app-orgchart",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "directories": {
+        "doc": "docs"
+    },
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "docs": "jsdoc2md static/chart.js > DOCUMENTATION.md",
+        "htmlDoc": "jsdoc static/chart.js static/properties.js -c jsdoc.json"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "devDependencies": {
+        "docdash": "^2.0.2",
+        "jsdoc": "^4.0.4",
+        "jsdoc-to-markdown": "^9.1.1"
+    }
+}

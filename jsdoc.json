@@ -1,0 +1,20 @@
+{
+    "opts": {
+        "template": "node_modules/docdash",
+        "destination": "./static/docs",
+        "readme": "README.md",
+        "recurse": true,
+        "verbose": true
+    },
+    "templates": {
+        "cleverLinks": false,
+        "monospaceLinks": false,
+        "default": {
+            "includeDate": false
+        }
+    },
+    "plugins": ["plugins/markdown"],
+    "tags": {
+        "allowUnknownTags": false
+    }
+}
