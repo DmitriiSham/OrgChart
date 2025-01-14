@@ -7,9 +7,7 @@
         "doc": "docs"
     },
     "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1",
-        "docs": "jsdoc2md static/chart.js > DOCUMENTATION.md",
-        "htmlDoc": "jsdoc static/chart.js static/properties.js -c jsdoc.json"
+        "htmlDoc": "jsdoc build/static/chart.js build/properties.js -c jsdoc.json"
     },
     "keywords": [],
     "author": "",

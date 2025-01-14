@@ -1,7 +1,7 @@
 {
     "opts": {
         "template": "node_modules/docdash",
-        "destination": "./static/docs",
+        "destination": "build/static/docs",
         "readme": "README.md",
         "recurse": true,
         "verbose": true
